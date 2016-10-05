@@ -14,6 +14,7 @@ var Grid = function (canvas, dict){
 	this.squareClicked = dict.onGridSquareClicked;
 	this.clickFillColor = dict.clickFillColor;
 	this.resetClickFill = dict.resetClickFill;
+	this.drawOnClick = dict.drawOnClick;
 
 	if (this.clickFillColor){
 		var t = this;
@@ -65,7 +66,12 @@ var Grid = function (canvas, dict){
 				this.context.fillRect(x*this.dotWidth,y*this.dotHeight,this.dotWidth,this.dotHeight);		
 			}
 		}
+
 		//Draw grid
+		this.__drawGrid();
+	}
+
+	this.__drawGrid = function(){
 		for (var i = 0; i <= this.columns; i++){
       		this.context.beginPath();
       		this.context.moveTo(this.dotWidth * i,0);
@@ -90,7 +96,11 @@ var Grid = function (canvas, dict){
 	var row = this.dotWidth;
 	var col = this.dotHeight;
 	var rect = canvas.getBoundingClientRect();
+	
 	canvas.addEventListener('click', function(e){
-		sq(Math.floor((e.clientX - rect.left) / row), Math.floor((e.clientY - rect.top) / col));
+		sq(Math.floor((e.clientX - rect.left) / self.dotWidth), Math.floor((e.clientY - rect.top) / self.dotHeight));
+		if (self.drawOnClick){
+			self.draw();
+		}
 	}, false);
 }
