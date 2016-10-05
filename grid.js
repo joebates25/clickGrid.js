@@ -44,6 +44,19 @@ var Grid = function (canvas, dict){
 		this.elementArray[x][y] = color;
 	}
 
+	this.replaceColor = function(oldColor, newColor, draw){
+		for (var i = 0; i < this.rows; i++){
+			for (var j = 0; j < this.columns; j++){
+				if (this.elementArray[i][j] == oldColor){
+					this.elementArray[i][j] = newColor;
+				}
+			}
+		}
+		if (draw){
+			this.draw();
+		}
+	}
+
 
 	this.draw = function(){
 		for (var x = 0; x < this.rows; x++){
